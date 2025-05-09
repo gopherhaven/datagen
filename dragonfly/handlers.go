@@ -1,8 +1,10 @@
 package dragonfly
 
 import (
+	_ "embed"
 	"fmt"
 	"math"
+	"sort"
 
 	"github.com/df-mc/datagen/data"
 	"github.com/df-mc/datagen/write"
@@ -111,4 +113,22 @@ func creativeItemFromStack(s protocol.ItemStack) CreativeItem {
 		}
 	}
 	return ci
+}
+
+func HandleBiomeDefinitionList(pk *packet.BiomeDefinitionList) {
+	var biomes []NamedBiome
+	list := pk.StringList
+
+	for _, definition := range pk.BiomeDefinitions {
+		name := list[definition.NameIndex]
+		biomes = append(biomes, NamedBiome{
+			Name:  name,
+			Biome: newBiomeDefinition(definition, list),
+		})
+	}
+	sort.Slice(biomes, func(i, j int) bool {
+		return biomes[i].Name < biomes[j].Name
+	})
+
+	write.NBT("output/dragonfly/server/world/biome_definitions.nbt", biomes)
 }

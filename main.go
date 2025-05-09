@@ -40,6 +40,8 @@ func main() {
 			dragonfly.HandleCraftingData(p)
 		case *packet.CreativeContent:
 			dragonfly.HandleCreativeContent(p)
+		case *packet.BiomeDefinitionList:
+			dragonfly.HandleBiomeDefinitionList(p)
 		}
 	}
 }
