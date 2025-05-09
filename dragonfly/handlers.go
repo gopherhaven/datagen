@@ -1,7 +1,6 @@
 package dragonfly
 
 import (
-	_ "embed"
 	"fmt"
 	"math"
 	"sort"
