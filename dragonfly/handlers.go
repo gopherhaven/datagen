@@ -107,8 +107,7 @@ func creativeItemFromStack(s protocol.ItemStack) CreativeItem {
 		if ok {
 			ci.BlockProperties = props
 		} else {
-			fmt.Println(fmt.Errorf("failed to get block properties for item %s with runtime ID %d", ci.Name, s.BlockRuntimeID))
-			// panic(fmt.Errorf("failed to get block properties for item %s with runtime ID %d", ci.Name, s.BlockRuntimeID))
+			panic(fmt.Errorf("failed to get block properties for item %s with runtime ID %d", ci.Name, s.BlockRuntimeID))
 		}
 	}
 	return ci
