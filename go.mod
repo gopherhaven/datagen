@@ -4,6 +4,7 @@ go 1.24.1
 
 require (
 	github.com/df-mc/dragonfly v0.10.3
+	github.com/samber/lo v1.38.1-0.20250505190938-a9a589c4d5cb
 	github.com/sandertv/gophertunnel v1.46.0
 	golang.org/x/oauth2 v0.30.0
 )
@@ -18,7 +19,6 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/muhammadmuzzammil1998/jsonc v1.0.0 // indirect
-	github.com/samber/lo v1.38.1-0.20250505190938-a9a589c4d5cb // indirect
 	github.com/sandertv/go-raknet v1.14.3-0.20250305181847-6af3e95113d6 // indirect
 	github.com/segmentio/fasthash v1.0.3 // indirect
 	golang.org/x/net v0.40.0 // indirect
