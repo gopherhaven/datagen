@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+
 	"github.com/sandertv/gophertunnel/minecraft/nbt"
 )
 

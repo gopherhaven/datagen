@@ -2,16 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"os"
+
 	"github.com/df-mc/datagen/dragonfly"
-	"github.com/df-mc/datagen/pocketmine"
 	_ "github.com/df-mc/dragonfly/server/world"
 	"github.com/sandertv/gophertunnel/minecraft"
 	"github.com/sandertv/gophertunnel/minecraft/auth"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"golang.org/x/oauth2"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 func main() {
@@ -30,7 +28,6 @@ func main() {
 		panic(err)
 	}
 	dragonfly.HandleGameData(conn.GameData())
-	pocketmine.HandleGameData(conn.GameData())
 
 	for {
 		pk, err := conn.ReadPacket()
@@ -39,16 +36,10 @@ func main() {
 		}
 
 		switch p := pk.(type) {
-		case *packet.AvailableActorIdentifiers:
-			pocketmine.HandleAvailableActorIdentifiers(p)
-		case *packet.BiomeDefinitionList:
-			pocketmine.HandleBiomeDefinitionList(p)
 		case *packet.CraftingData:
 			dragonfly.HandleCraftingData(p)
-			pocketmine.HandleCraftingData(p)
 		case *packet.CreativeContent:
 			dragonfly.HandleCreativeContent(p)
-			pocketmine.HandleCreativeContent(p)
 		}
 	}
 }
@@ -78,15 +69,8 @@ func tokenSource() oauth2.TokenSource {
 		check(err)
 		src = auth.RefreshTokenSource(token)
 	}
-	go func() {
-		c := make(chan os.Signal, 3)
-		signal.Notify(c, syscall.SIGTERM, syscall.SIGINT)
-		<-c
-
-		tok, _ := src.Token()
-		b, _ := json.Marshal(tok)
-		_ = os.WriteFile("token.tok", b, 0644)
-		os.Exit(0)
-	}()
+	tok, _ := src.Token()
+	b, _ := json.Marshal(tok)
+	_ = os.WriteFile("token.tok", b, 0644)
 	return src
 }

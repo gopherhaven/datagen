@@ -2,13 +2,14 @@ package dragonfly
 
 import (
 	"fmt"
+	"math"
+
 	"github.com/df-mc/datagen/data"
 	"github.com/df-mc/datagen/write"
 	"github.com/df-mc/dragonfly/server/world/chunk"
 	"github.com/sandertv/gophertunnel/minecraft"
 	"github.com/sandertv/gophertunnel/minecraft/protocol"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
-	"math"
 )
 
 func HandleGameData(gameData minecraft.GameData) {
@@ -106,7 +107,8 @@ func creativeItemFromStack(s protocol.ItemStack) CreativeItem {
 		if ok {
 			ci.BlockProperties = props
 		} else {
-			panic(fmt.Errorf("failed to get block properties for item %s with runtime ID %d", ci.Name, s.BlockRuntimeID))
+			fmt.Println(fmt.Errorf("failed to get block properties for item %s with runtime ID %d", ci.Name, s.BlockRuntimeID))
+			// panic(fmt.Errorf("failed to get block properties for item %s with runtime ID %d", ci.Name, s.BlockRuntimeID))
 		}
 	}
 	return ci
