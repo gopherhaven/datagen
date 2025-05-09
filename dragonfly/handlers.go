@@ -115,18 +115,14 @@ func creativeItemFromStack(s protocol.ItemStack) CreativeItem {
 }
 
 func HandleBiomeDefinitionList(pk *packet.BiomeDefinitionList) {
-	var biomes []NamedBiome
+	var biomes []BiomeDefinition
 	list := pk.StringList
 
 	for _, definition := range pk.BiomeDefinitions {
-		name := list[definition.NameIndex]
-		biomes = append(biomes, NamedBiome{
-			Name:  name,
-			Biome: newBiomeDefinition(definition, list),
-		})
+		biomes = append(biomes, newBiomeDefinition(definition, list))
 	}
 	sort.Slice(biomes, func(i, j int) bool {
-		return biomes[i].Name < biomes[j].Name
+		return biomes[i].BiomeName < biomes[j].BiomeName
 	})
 
 	write.NBT("output/dragonfly/server/world/biome_definitions.nbt", biomes)

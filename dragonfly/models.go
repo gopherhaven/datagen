@@ -274,13 +274,10 @@ func newOutputItem(output protocol.ItemStack) RecipeOutputItem {
 	return item
 }
 
-type NamedBiome struct {
-	Name  string
-	Biome BiomeDefinition
-}
-
 type BiomeDefinition struct {
-	BiomeID          uint16  `nbt:"id,omitempty"`
+	BiomeName string `nbt:"name"`
+	BiomeID   uint16 `nbt:"id,omitempty"`
+	
 	Temperature      float32 `nbt:"temperature"`
 	Downfall         float32 `nbt:"downfall"`
 	RedSporeDensity  float32 `nbt:"redSporeDensity"`
@@ -307,7 +304,10 @@ func newBiomeDefinition(definition protocol.BiomeDefinition, list []string) Biom
 			return list[i]
 		})
 	}
+
+	biomeName := list[definition.NameIndex]
 	return BiomeDefinition{
+		BiomeName:        biomeName,
 		BiomeID:          biomeID,
 		Temperature:      definition.Temperature,
 		Downfall:         definition.Downfall,
